@@ -5,7 +5,7 @@
 // hat counter
 // house counter
 // doll counter
-// Blank Def counter 
+// Blank Def counter
 // flames counter
 // Penalty Counters
     // fire = 3
@@ -15,7 +15,7 @@
     // cancel-support = 1
     // pass-left = 1
     // pass-right = 1
-    // blank penalty 
+    // blank penalty
 
 // loop for 4 levels of Plunderer
 // for i = 1; i <= 13 ; i++
@@ -40,7 +40,7 @@
         // if there are penalties available
         // if there are flames available
 
-    
+
 
 // URGENT:: which raiders have flames and specific def symbols and specific penalties.
 
@@ -92,10 +92,10 @@ function generateCards(){
 
     //var ran:number = getRandomInt(0,3);
 
-    
+
     //var id = getRaiderID(raider[ran]);
     buildRaider();
-    printRaider(); 
+    printRaider();
 }
 
 // Switching to Farms is an issue and Flames are false after the initial two are set for hats.
@@ -107,87 +107,144 @@ function buildRaider(){
     var isFlame:boolean = true;
     var defSymbol:string[] = ["hat", "doll", "farm", "none"];
     var penalty:string[] = ["Fire", "Wound", "Ninja", "Cancel-Block", "Support-Block", "Pass-Left", "Pass-Right", "None"];
-    
+
     var setPenalty:string = penalty[0]; //PROBLEM: there is no set pattern to the penalties on a card
     var hasSymbol:string = defSymbol[0];
+    var hasPenalty:string = penalty[0];
+    var penaltyToggle:number = 0;
 
-    
-    // PROBLEM: Each level needs to be refactored into separte functions. 
+
+    // PROBLEM: Each level needs to be refactored into separte functions.
     if (level == 1 || level == 2){
-        type = "P"; 
+        type = "P";
         hats_count = 4;
         dolls_count = 4;
         farms_count = 4;
         flames_count = 6;
-        
-        //Flames remains true after hat completes
-        for(var p:number = 1; p <= 13; p++){
+        penalty_count = 0;
 
-            //check if flame is available
-            if(isFlame == true) {
-            
+        console.log("BEGIN");
+
+        for(var p:number = 1; p <= 13; p++){
+          console.log(p);
+
+            //check if def Symbol exists, switches symbol if not and resets flame boolean.
+            if(hats_count == 0){
+                hasSymbol = defSymbol[1];
+                isFlame = true;
+            }
+
+            if(dolls_count == 0){
+                hasSymbol = defSymbol[2];
+                isFlame = true;
+
+            }
+
+            if(farms_count == 0){
+                hasSymbol = defSymbol[3];
+
+            }
+            //REFACTOR into seperate function
+            // Checks specific def symbols if all available flames have been assigned
+            if(isFlame == true){
+
                 if(hasSymbol == "hat"){
                     if(hats_count <= 2) {
                         isFlame = false;
                     }
+                    else{
+                      flames_count--;
+                    }
                 }
-                else if (hasSymbol == 'doll'){
+                if (hasSymbol == 'doll'){
                     if(dolls_count <= 2){
                         isFlame = false;
                     }
+                    else{
+                      flames_count--;
+                    }
                 }
-                 else if(hasSymbol == "farm"){
+                 if(hasSymbol == "farm"){
                      if(farms_count <= 2){
                          isFlame = false;
                      }
+                     else{
+                       flames_count--;
+                     }
                 }
-
-                else if(flames_count == 0){
+                if(flames_count == 0){
                     isFlame = false;
                 }
             }
 
-            //check if def Symbol exists, switches symbol if not and resets flame boolean.
-            if(hats_count == 0){ // this will always be true when hats_count reaches 0 and will cause flames to always be
-                hasSymbol = defSymbol[1];
-            }
+            // add penalty to cards
+            //var penalty:string[] = ["Fire", "Wound", "Ninja", "Cancel-Block", "Support-Block", "Pass-Left", "Pass-Right", "None"];
 
-            else if(dolls_count == 0){
-                hasSymbol = defSymbol[2];
-            }
-            else if(farms_count == 0){
-                hasSymbol = defSymbol[3];
-            }
+            //hat penalties
+            //REFACTOR: into seperate function
+            if(hasSymbol == "hat" && isFlame == true){
+                if(penaltyToggle == 0){
+                  hasPenalty = penalty[0]
 
-            //move defSymbol change here?
-            if(hasSymbol == "hat" && hats_count > 0){
-                hats_count--;
-                if(hats_count < 3){
-                    isFlame = false;
                 }
-                else
-                    isFlame = true;
-            }
-            if(hasSymbol == "doll" && dolls_count > 0){
-            
-                dolls_count--;
-                if(dolls_count < 3){
-                    isFlame = false;
+                else{
+
                 }
-                else
-                    isFlame = true;
+
             }
-            if(hasSymbol == "farms" && farms_count > 0){
-                farms_count--;
-                if(farms_count < 3){
-                    isFlame = false;
-                }
-                else
-                    isFlame = true;
+            else if(hasSymbol == "hat" && isFlame == false){
+              if(penaltyToggle == 0){
+
+              }
+              else{
+
+              }
+
             }
 
-            console.log("Flame? " + isFlame);
+            if(hasSymbol == "doll" && isFlame == true){
+              if(penaltyToggle == 0){
 
+              }
+              else{
+
+              }
+
+            }
+            else if(hasSymbol == "doll" && isFlame == false){
+              if(penaltyToggle == 0){
+
+              }
+              else{
+
+              }
+
+            }
+
+            if(hasSymbol == "farm" && isFlame == true){
+              if(penaltyToggle == 0){
+
+              }
+              else{
+
+              }
+
+            }
+            else if(hasSymbol == "farm" && isFlame == false){
+              if(penaltyToggle == 0){
+
+              }
+              else{
+
+              }
+
+            }
+
+            if(hasSymbol == "none"){
+              hasPenalty = penalty[0];
+            }
+
+            // assigns builds current raider card specifics
             let raider:Raider = {
                 id: generateID(type, level.toString(), p.toString()),
                 type: "Plunderer",
@@ -195,10 +252,31 @@ function buildRaider(){
                 setNum: p,
                 flame: isFlame,
                 defSymbol: hasSymbol,
-                penalty: "none",
+                penalty: hasPenalty,
                 bossPenalty: "none",
 
             };
+
+            console.log("Flame? " + isFlame);
+            // decrements the def symbol count after being assigned.
+            if(hasSymbol == "hat" && hats_count > 0){
+                hats_count--;
+
+             }
+            if(hasSymbol == "doll" && dolls_count > 0){
+
+                dolls_count--;
+
+            }
+
+            if(hasSymbol == "farm" && farms_count > 0){
+                farms_count--;
+
+            }
+
+            console.log("Hats: " + hats_count + " " + "Dolls: " + dolls_count + " " + "Farms: " + farms_count);
+            console.log(hasSymbol);
+            //console.log("Flame? " + isFlame);
 
             // ADD CURRENT RAIDER TO CARD ARRAY
 
@@ -210,9 +288,9 @@ function buildRaider(){
             //             "\nDEFSYMBOL: " + raider.defSymbol +
             //             "\nPENALTY: " + raider.penalty +
             //             "\nBOSSPENALTY: " + raider.bossPenalty);
-            
+
             //console.log("\nRAIDER BUILT\n")
-            
+
         }
 
         level++;
@@ -253,9 +331,9 @@ function buildRaider(){
 
     }
 }
-  
+
 // generates the correct string ID.
-// allows for expansion to lieutenant and boss levels. 
+// allows for expansion to lieutenant and boss levels.
 // NOT A GOOD STRING FUNCTION
 function getRaiderID(raid_type:string, raid_level:string, setNum:string){
     var raidID = "";
