@@ -88,14 +88,16 @@ function getRandomInt(min:number, max:number) {
 
 function generateCards(){
 
-    //var raider_type:string[] = ["Plunderer", "Lieutenants", "Bosses"];
-
-    //var ran:number = getRandomInt(0,3);
 
 
-    //var id = getRaiderID(raider[ran]);
     buildRaider();
-    printRaider();
+    //level 1
+    //level 2
+    //level 3
+    //level 4
+    //level 5
+    //level 6
+
 }
 
 // Switching to Farms is an issue and Flames are false after the initial two are set for hats.
@@ -121,7 +123,7 @@ function buildRaider(){
         dolls_count = 4;
         farms_count = 4;
         flames_count = 6;
-        penalty_count = 0;
+        //penalty_count = 0;
 
         console.log("BEGIN");
 
@@ -184,64 +186,71 @@ function buildRaider(){
             //REFACTOR: into seperate function
             if(hasSymbol == "hat" && isFlame == true){
                 if(penaltyToggle == 0){
-                  hasPenalty = penalty[0]
+                  hasPenalty = penalty[0];
+                  penaltyToggle = 1;
 
                 }
                 else{
-
+                  hasPenalty = penalty[7];
                 }
 
             }
             else if(hasSymbol == "hat" && isFlame == false){
               if(penaltyToggle == 0){
-
+                hasPenalty = penalty[0];
+                penaltyToggle = 1;
               }
               else{
-
+                penaltyToggle = 0;
               }
 
             }
 
             if(hasSymbol == "doll" && isFlame == true){
               if(penaltyToggle == 0){
-
+                hasPenalty = penalty[0];
+                penaltyToggle = 1;
               }
               else{
-
+                penaltyToggle = 0;
               }
 
             }
             else if(hasSymbol == "doll" && isFlame == false){
               if(penaltyToggle == 0){
-
+                hasPenalty = penalty[0];
+                penaltyToggle = 1;
               }
               else{
-
+                penaltyToggle = 0;
               }
 
             }
 
             if(hasSymbol == "farm" && isFlame == true){
               if(penaltyToggle == 0){
-
+                hasPenalty = penalty[0];
+                penaltyToggle = 1;
               }
               else{
-
+                penaltyToggle = 0;
               }
 
             }
             else if(hasSymbol == "farm" && isFlame == false){
               if(penaltyToggle == 0){
-
+                hasPenalty = penalty[0];
+                penaltyToggle = 1;
               }
               else{
-
+                penaltyToggle = 0;
               }
 
             }
 
             if(hasSymbol == "none"){
               hasPenalty = penalty[0];
+              penaltyToggle = 0;
             }
 
             // assigns builds current raider card specifics
@@ -256,8 +265,9 @@ function buildRaider(){
                 bossPenalty: "none",
 
             };
+            printRaider(raider);
 
-            console.log("Flame? " + isFlame);
+            //console.log("Flame? " + isFlame);
             // decrements the def symbol count after being assigned.
             if(hasSymbol == "hat" && hats_count > 0){
                 hats_count--;
@@ -274,22 +284,22 @@ function buildRaider(){
 
             }
 
-            console.log("Hats: " + hats_count + " " + "Dolls: " + dolls_count + " " + "Farms: " + farms_count);
-            console.log(hasSymbol);
+            // console.log("Hats: " + hats_count + " " + "Dolls: " + dolls_count + " " + "Farms: " + farms_count);
+            // console.log(hasSymbol);
             //console.log("Flame? " + isFlame);
-
+            //console.log("Card Info\n" + hasSymbol, hasPenalty, );
             // ADD CURRENT RAIDER TO CARD ARRAY
 
 
-            // console.log("ID: " + raider.id +
+            // console.log("\nID: " + raider.id +
             //             "\nTYPE: " + raider.type +
             //             "\nSETNUM: " + raider.setNum +
             //             "\nFLAME: " + raider.flame +
             //             "\nDEFSYMBOL: " + raider.defSymbol +
             //             "\nPENALTY: " + raider.penalty +
-            //             "\nBOSSPENALTY: " + raider.bossPenalty);
+            //             "\nBOSSPENALTY: " + raider.bossPenalty +
+            //             "\nRAIDER BUILT\n");
 
-            //console.log("\nRAIDER BUILT\n")
 
         }
 
@@ -330,6 +340,7 @@ function buildRaider(){
         flames_count = 7;
 
     }
+
 }
 
 // generates the correct string ID.
@@ -395,7 +406,14 @@ function generateID(type:string, level:string, setNum:string){
 }
 
 // print raider to file
-function printRaider(){
+function printRaider(raider: Raider){
 
-    console.log("Raider Created!")
+  console.log("\nID: " + raider.id +
+              "\nTYPE: " + raider.type +
+              "\nSETNUM: " + raider.setNum +
+              "\nFLAME: " + raider.flame +
+              "\nDEFSYMBOL: " + raider.defSymbol +
+              "\nPENALTY: " + raider.penalty +
+              "\nBOSSPENALTY: " + raider.bossPenalty +
+              "\n\nRAIDER BUILT\n");
 }
