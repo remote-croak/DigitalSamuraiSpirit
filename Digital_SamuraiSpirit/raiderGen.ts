@@ -61,6 +61,7 @@ var farms_count:number = 0;
 var flames_count:number = 0;
 var card_array:Raider[];
 
+// factor into different file?
 interface Raider {
     id:string ;
     type:string;
@@ -89,7 +90,7 @@ function getRandomInt(min:number, max:number) {
 function generateCards(){
 
 
-
+    card_array = [];
     buildRaider();
     //level 1
     //level 2
@@ -97,11 +98,12 @@ function generateCards(){
     //level 4
     //level 5
     //level 6
+    printRaider();
 
 }
 
 // Switching to Farms is an issue and Flames are false after the initial two are set for hats.
-// This function needs to be separated intoi three different files. and called in the main code. Too much spagetti.
+// This function needs to be separated into three different files. and called in the main code. Too much spagetti.
 function buildRaider(){
     var raider_type:string[] = ["Plunderer", "Lieutenants", "Bosses"];
     var type:string;
@@ -114,7 +116,7 @@ function buildRaider(){
     var hasSymbol:string = defSymbol[0];
     var hasPenalty:string = penalty[0];
     var penaltyToggle:number = 0;
-
+    var card_test = 0;
 
     // PROBLEM: Each level needs to be refactored into separte functions.
     if (level == 1 || level == 2){
@@ -123,12 +125,9 @@ function buildRaider(){
         dolls_count = 4;
         farms_count = 4;
         flames_count = 6;
-        //penalty_count = 0;
 
-        console.log("BEGIN");
-
+        // loop that generates cards
         for(var p:number = 1; p <= 13; p++){
-          console.log(p);
 
             //check if def Symbol exists, switches symbol if not and resets flame boolean.
             if(hats_count == 0){
@@ -146,6 +145,7 @@ function buildRaider(){
                 hasSymbol = defSymbol[3];
 
             }
+
             //REFACTOR into seperate function
             // Checks specific def symbols if all available flames have been assigned
             if(isFlame == true){
@@ -265,9 +265,10 @@ function buildRaider(){
                 bossPenalty: "none",
 
             };
-            printRaider(raider);
 
-            //console.log("Flame? " + isFlame);
+            card_array.push(raider);
+
+
             // decrements the def symbol count after being assigned.
             if(hasSymbol == "hat" && hats_count > 0){
                 hats_count--;
@@ -283,23 +284,6 @@ function buildRaider(){
                 farms_count--;
 
             }
-
-            // console.log("Hats: " + hats_count + " " + "Dolls: " + dolls_count + " " + "Farms: " + farms_count);
-            // console.log(hasSymbol);
-            //console.log("Flame? " + isFlame);
-            //console.log("Card Info\n" + hasSymbol, hasPenalty, );
-            // ADD CURRENT RAIDER TO CARD ARRAY
-
-
-            // console.log("\nID: " + raider.id +
-            //             "\nTYPE: " + raider.type +
-            //             "\nSETNUM: " + raider.setNum +
-            //             "\nFLAME: " + raider.flame +
-            //             "\nDEFSYMBOL: " + raider.defSymbol +
-            //             "\nPENALTY: " + raider.penalty +
-            //             "\nBOSSPENALTY: " + raider.bossPenalty +
-            //             "\nRAIDER BUILT\n");
-
 
         }
 
@@ -406,14 +390,9 @@ function generateID(type:string, level:string, setNum:string){
 }
 
 // print raider to file
-function printRaider(raider: Raider){
+function printRaider(){
+  card_array.forEach(function (value) {
+    console.log(value.id);
+  });
 
-  console.log("\nID: " + raider.id +
-              "\nTYPE: " + raider.type +
-              "\nSETNUM: " + raider.setNum +
-              "\nFLAME: " + raider.flame +
-              "\nDEFSYMBOL: " + raider.defSymbol +
-              "\nPENALTY: " + raider.penalty +
-              "\nBOSSPENALTY: " + raider.bossPenalty +
-              "\n\nRAIDER BUILT\n");
 }
