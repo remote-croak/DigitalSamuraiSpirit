@@ -249,7 +249,7 @@ class RaiderGeneration{
               //hat penalties
               //REFACTOR: into seperate function
 
-              startLevelPenalties(isFlame, penalty, raid);
+              startLevelPenalties(hasSymbol, isFlame, penalty, raid);
 
               // if(hasSymbol == "hat" && isFlame == true){
               //     if(penaltyToggle == 0){
@@ -398,14 +398,43 @@ class RaiderGeneration{
   //   bossPenalties();
   // }
 
-  function startLevelPenalties(flame:boolean, penalties:string[], raid:any){
+  function startLevelPenalties(symbol: string, flame: boolean, penalties: string[], raid: any){
+    if(symbol == "hat"){
+      if(flame == true){
+        flameHatPenalty(1, penalties, raid)
+      }
 
-    if(flame == true){
-      flameHatPenalty(1, penalties, raid)
+      else{
+        plainHatPenalty(1, penalties, raid)
+      }
     }
 
-    else{
-      plainHatPenalty(1, penalties, raid)
+    else if(symbol == "doll"){
+      if(flame == true){
+        flameDollPenalty(1, penalties, raid);
+      }
+      else{
+        plainDollPenalty(1, penalties, raid);
+      }
+    }
+
+    else if(symbol == "farm"){
+      if(flame == true){
+        flameFarmPenalty(1, penalties, raid);
+      }
+      else{
+        plainFarmPenalty(1, penalties, raid);
+
+      }
+    }
+
+    else if(symbol == "none"){
+      if(flame == true){
+
+      }
+      else{
+
+      }
     }
     // addDollPenalties();
     // addFarmPenalties();
@@ -441,7 +470,57 @@ class RaiderGeneration{
   //   addBossPenalties();
   // }
 
-  function flameFarmPenalty(){
+  // Function Description: Add a penalty to a card with flames and no defensive symbols
+  function blankFlamePenalties(level: number, penalty_array: string [], raid: any){
+    if(raid.getToggle() == 0){
+      raid.setToggle(1);
+
+      if(level == 1 || level == 2 || level == 5){
+        return penalty_array[0];
+      }
+      else if(level == 3 || level == 4){
+        return penalty_array[1];
+      }
+    }
+
+    else if(raid.getToggle() == 1){
+      raid.setToggle(2);
+      if(level == 5){
+        return penalty_array[1]
+      }
+
+    else if(raid.getToggle() == 2)
+      raid.setToggle(3);
+      if(level == 5){
+        return penalty_array[2];
+      }
+    }
+
+    else if(raid.getToggle() == 3){
+      raid.setToggle(0);
+      if(level == 5){
+        return penalty_array[4];
+      }
+    }
+
+  }
+
+  // Function Description: Add a penalty to a card with no flame and no defensive symbols attached.
+  function blankPlainPenalties(level: number, penalty_array: string[], raid: any){
+      if(raid.getToggle() == 0){
+        raid.setToggle(1);
+
+        if(level == 1 || level == 2){
+          return penalty_array[0];
+        }
+
+        else if(level == 3 || level == 4){
+          return penalty_array[1];
+        }
+      }
+  }
+
+  function flameFarmPenalty(level: number, penalty_array: string[], raid: any){
       if(raid.getToggle() == 0){
         raid.setToggle(1);
 
@@ -458,10 +537,10 @@ class RaiderGeneration{
       }
   }
 
-  function plainFarmPenalty(){
+  function plainFarmPenalty(level: number, penalty_array: string[], raid: any){
     if(raid.getToggle() == 0){
       raid.setToggle(1);
-      if(level == 1 || level == 2 || level == 3 || level = 4){
+      if(level == 1 || level == 2 || level == 3 || level == 4){
         return penalty_array[4];
       }
     }
@@ -479,7 +558,7 @@ class RaiderGeneration{
     }
   }
 
-  function flameDollPenalty(){
+  function flameDollPenalty(level: number, penalty_array: string[], raid: any){
     if(raid.getToggle() == 0){
       raid.setToggle(1);
       if(level == 1 || level == 2 || level == 3 || level == 4){
@@ -496,7 +575,7 @@ class RaiderGeneration{
 
   // Description: Add penalties to a card with a doll def symbol and without a flame attached.
   // Parameters:
-  function plainDollPenalty(){
+  function plainDollPenalty(level: number, penalty_array: string[], raid: any){
 
     if(raid.getToggle() == 0){
       raid.setToggle(1);
@@ -535,7 +614,7 @@ class RaiderGeneration{
   //              p_toggle: which penalty in a defined set of 2 or 3 should be applied
   //              level: the level of the card
   //              penalty_array: the array of penalties that can be applied
-  function flameHatPenalty(level: number, penalty_array: string[], raid:any){
+  function flameHatPenalty(level: number, penalty_array: string[], raid: any){
     //var penalty_array:string[] = ["Fire", "Wound", "Ninja", "Cancel-Block", "Support-Block", "Pass-Left", "Pass-Right", "None"];
 
     // if toggle is zero assign correct penalty
@@ -561,7 +640,7 @@ class RaiderGeneration{
     }
   }
 
-  function plainHatPenalty(level: number , penalty_array: string[], raid:any){
+  function plainHatPenalty(level: number , penalty_array: string[], raid: any){
 
   // if Flame is false assign correct penalty
 
@@ -592,7 +671,7 @@ class RaiderGeneration{
   // generates the correct string ID.
   // allows for expansion to lieutenant and boss levels.
   // NOT A GOOD STRING FUNCTION
-  function getRaiderID(raid_type:string, raid_level:string, setNum:string){
+  function getRaiderID(raid_type: string, raid_level: string, setNum: string){
       var raidID = "";
 
       var type:string = "";
