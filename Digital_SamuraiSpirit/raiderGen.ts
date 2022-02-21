@@ -399,7 +399,14 @@ class RaiderGeneration{
   // }
 
   function startLevelPenalties(flame:boolean, penalties:string[], raid:any){
-    addHatPenalties(flame, 1, penalties, raid);
+
+    if(flame == true){
+      flameHatPenalty(1, penalties, raid)
+    }
+
+    else{
+      plainHatPenalty(1, penalties, raid)
+    }
     // addDollPenalties();
     // addFarmPenalties();
     // addBlankPenalties();
@@ -433,65 +440,153 @@ class RaiderGeneration{
   //   addFarmPenalties();
   //   addBossPenalties();
   // }
+
+  function flameFarmPenalty(){
+      if(raid.getToggle() == 0){
+        raid.setToggle(1);
+
+        if(level == 1 || level == 2 || level == 3 || level == 4){
+            return penalty_array[0];
+          }
+      }
+      else if(raid.getToggle() == 1){
+        raid.setToggle(0);
+
+        if (level == 1 || level == 2 || level == 3 || level == 4){
+          return penalty_array[1];
+        }
+      }
+  }
+
+  function plainFarmPenalty(){
+    if(raid.getToggle() == 0){
+      raid.setToggle(1);
+      if(level == 1 || level == 2 || level == 3 || level = 4){
+        return penalty_array[4];
+      }
+    }
+    else if(raid.getToggle() == 1){
+      raid.setToggle(0);
+      if(level == 1 || level == 2){
+        return penalty_array[2]
+      }
+      else if(level == 3){
+        return penalty_array[5];
+      }
+      else if(level == 4){
+        return penalty_array[6];
+      }
+    }
+  }
+
+  function flameDollPenalty(){
+    if(raid.getToggle() == 0){
+      raid.setToggle(1);
+      if(level == 1 || level == 2 || level == 3 || level == 4){
+        return penalty_array[0];
+      }
+    }
+
+    else{
+      if (level == 1 || level == 2 || level == 3 || level == 4){
+        return penalty_array[1];
+      }
+    }
+  }
+
+  // Description: Add penalties to a card with a doll def symbol and without a flame attached.
+  // Parameters:
+  function plainDollPenalty(){
+
+    if(raid.getToggle() == 0){
+      raid.setToggle(1);
+      if(level == 1 || level == 2 || level == 3 || level == 4){
+        return penalty_array[7];
+      }
+    }
+
+    else if(raid.getToggle() == 1){
+      raid.setToggle(2);
+
+      if(level == 1 || level == 2 || level == 5){
+        return penalty_array[2];
+      }
+
+      else if(level == 3 || level == 4){
+        return penalty_array[3];
+      }
+    }
+
+    else{
+      raid.setToggle(0);
+
+      if(level == 3){
+        return penalty_array[5];
+      }
+      else if(level == 4){
+        return penalty_array[6];
+      }
+    }
+  }
+
   // Function description: Adds penalties associated with hat def symbols to cards judged accurate by a variety of parameters
   // Parameters:
   //              Flame: checks if a flame is present on the card
   //              p_toggle: which penalty in a defined set of 2 or 3 should be applied
   //              level: the level of the card
   //              penalty_array: the array of penalties that can be applied
-  function addHatPenalties(flame: boolean, level: number, penalty_array: string[], raid:any){
+  function flameHatPenalty(level: number, penalty_array: string[], raid:any){
     //var penalty_array:string[] = ["Fire", "Wound", "Ninja", "Cancel-Block", "Support-Block", "Pass-Left", "Pass-Right", "None"];
 
-      // if flame is true assign correct penalty
-      if(flame == true){
-          // if toggle is zero assign correct penalty
-          if(raid.getToggle() == 0){
-            raid.setToggle(1); // sets the secondary penalty on the next flame card
-            if (level == 1 || level == 2){
-              return penalty_array[1]; // wound
-            }
-            else if (level == 3 || 4){
-              return penalty_array[0]; // fire
-            }
-          }
+    // if toggle is zero assign correct penalty
+    if(raid.getToggle() == 0){
+      raid.setToggle(1); // sets the secondary penalty on the next flame card
+      if (level == 1 || level == 2){
+        return penalty_array[1]; // wound
+      }
+      else if (level == 3 || 4){
+        return penalty_array[0]; // fire
+      }
+    }
 
-          // if p_toggle is not zero assign correct penalty
-          else{
-            if (level == 1 || level == 2 || level == 3){
-              return penalty_array[7]; // none
-            }
-
-            else if (level == 4){
-              return penalty_array[6]; // pass right
-            }
-          }
+    // if p_toggle is not zero assign correct penalty
+    else{
+      if (level == 1 || level == 2 || level == 3){
+        return penalty_array[7]; // none
       }
 
-      // if Flame is false assign correct penalty
-      else if(flame == false){
-        if(raid.getToggle() == 0){
-          if (level == 1 || level == 2){
-            raid.setToggle(1); // sets the secondary penalty on the next flame card
-            return penalty_array[2]; // ninja
-          }
-          else if (level == 3){
-            return penalty_array[5]; // pass left
-          }
-          else if (level == 4){
-            return penalty_array[7]; // none
-          }
-          else if (level == 5){
-            return penalty_array[1]; // wound
-          }
-
-        }
-        else{
-          if (level == 1 || level == 2){
-            raid.setToggle(0); // returns to the primary penalty for the next card
-            return penalty_array[3]; // cancel-block
-          }
-        }
+      else if (level == 4){
+        return penalty_array[6]; // pass right
       }
+    }
+  }
+
+  function plainHatPenalty(level: number , penalty_array: string[], raid:any){
+
+  // if Flame is false assign correct penalty
+
+    if(raid.getToggle() == 0){
+      if (level == 1 || level == 2){
+        raid.setToggle(1); // sets the secondary penalty on the next flame card
+        return penalty_array[2]; // ninja
+      }
+      else if (level == 3){
+        return penalty_array[5]; // pass left
+      }
+      else if (level == 4){
+        return penalty_array[7]; // none
+      }
+      else if (level == 5){
+        return penalty_array[1]; // wound
+      }
+
+    }
+    else{
+      if (level == 1 || level == 2){
+        raid.setToggle(0); // returns to the primary penalty for the next card
+        return penalty_array[3]; // cancel-block
+      }
+    }
   }
 
   // generates the correct string ID.
@@ -558,8 +653,8 @@ class RaiderGeneration{
 
   // print raider to file
   function printRaider(){
-    card_array.forEach(function (value) {
-      console.log(value.id);
+    card_array.forEach(function (raiders) {
+      console.log(raiders);
     });
 
   }
