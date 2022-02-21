@@ -154,12 +154,7 @@ class RaiderGeneration{
 
       card_array = [];
       buildRaider();
-      //level 1
-      //level 2
-      //level 3
-      //level 4
-      //level 5
-      //level 6
+
       printRaider();
 
   }
@@ -219,7 +214,7 @@ class RaiderGeneration{
                           isFlame = false;
                       }
                       else{
-                        raid.reduceFlames();
+                        raid.setFlames(raid.getFlames() - 1);
                       }
                   }
                   if (hasSymbol == 'doll'){
@@ -227,7 +222,7 @@ class RaiderGeneration{
                           isFlame = false;
                       }
                       else{
-                        raid.reduceFlames();
+                        raid.setFlames(raid.getFlames() - 1);
                       }
                   }
                    if(hasSymbol == "farm"){
@@ -235,7 +230,7 @@ class RaiderGeneration{
                            isFlame = false;
                        }
                        else{
-                         raid.reduceFlames();
+                         raid.setFlames(raid.getFlames() - 1);
                        }
                   }
                   if(raid.getFlames() == 0){
@@ -248,7 +243,7 @@ class RaiderGeneration{
 
               //hat penalties
               //REFACTOR: into seperate function
-
+              //console.log(raid.getHats());
               startLevelPenalties(hasSymbol, isFlame, penalty, raid);
 
               // if(hasSymbol == "hat" && isFlame == true){
@@ -330,20 +325,18 @@ class RaiderGeneration{
 
               card_array.push(raider);
 
-
               // decrements the def symbol count after being assigned.
               if(hasSymbol == "hat" && raid.getHats() > 0){
-                  raid.reduceHats();
 
+                  raid.setHats(raid.getHats() - 1);
                }
-              if(hasSymbol == "doll" && raid.getDolls()> 0){
-                raid.reduceDolls();
 
+              if(hasSymbol == "doll" && raid.getDolls()> 0){
+                raid.setDolls(raid.getDolls() - 1);
               }
 
               if(hasSymbol == "farm" && raid.getFarms() > 0){
-                  raid.reduceFarms();
-
+                  raid.setFarms(raid.getFarms() - 1);
               }
 
           }
