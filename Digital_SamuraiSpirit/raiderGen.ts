@@ -75,6 +75,7 @@ class RaiderGeneration{
   private _farms:number;
   private _flames:number;
   private _toggle:number;
+  private _numCards:number;
 
   constructor(){
     this._hats = 0;
@@ -82,6 +83,7 @@ class RaiderGeneration{
     this._farms = 0;
     this._flames = 0;
     this._toggle = 0;
+    this._numCards = 0;
   }
 
 
@@ -101,20 +103,12 @@ class RaiderGeneration{
     return this._hats;
   }
 
-  reduceHats(){
-    this._hats = this._hats--;
-  }
-
   setDolls(num:number){
     this._dolls = num;
   }
 
   getDolls(){
     return this._dolls;
-  }
-
-  reduceDolls(){
-    this._dolls = this._dolls--;
   }
 
   setFarms(num:number){
@@ -125,10 +119,6 @@ class RaiderGeneration{
     return this._farms;
   }
 
-  reduceFarms(){
-    this._farms = this._farms--;
-  }
-
   setFlames(num:number){
     this._flames = num;
   }
@@ -136,8 +126,12 @@ class RaiderGeneration{
     return this._flames;
   }
 
-  reduceFlames(){
-    this._flames = this._flames--;
+  setCardNum(num: number){
+    this._numCards = num;
+  }
+
+  getCardNum(){
+    return this._numCards;
   }
 }
 
@@ -153,7 +147,7 @@ class RaiderGeneration{
 
 
       card_array = [];
-      buildRaider();
+      buildRaider(5);
 
       printRaider();
 
@@ -161,227 +155,130 @@ class RaiderGeneration{
 
   // Switching to Farms is an issue and Flames are false after the initial two are set for hats.
   // This function needs to be separated into three different files. and called in the main code. Too much spagetti.
-  function buildRaider(){
+  function buildRaider(level:number){
 
       const raid = new RaiderGeneration();
       var raider_type:string[] = ["Plunderer", "Lieutenants", "Bosses"];
       var type:string;
-      var level:number = 1;
       var isFlame:boolean = true;
       var defSymbol:string[] = ["hat", "doll", "farm", "none"];
-      var penalty:string[] = ["Fire", "Wound", "Ninja", "Cancel-Block", "Support-Block", "Pass-Left", "Pass-Right", "None"];
+      var penalty:string[] = ["Fire", "Wound", "Ninja", "Cancel-Block", "Cancel-Support", "Pass-Left", "Pass-Right", "None"];
 
       var setPenalty:string = penalty[0]; //PROBLEM: there is no set pattern to the penalties on a card
       var hasSymbol:string = defSymbol[0];
-      var hasPenalty:string = penalty[0];
+      var hasPenalty;
       var penaltyToggle:number = 0;
       var card_test = 0;
 
       // PROBLEM: Each level needs to be refactored into separte functions.
-      if (level == 1 || level == 2){
-          type = "P";
-          raid.setHats(4);
-          raid.setDolls(4);
-          raid.setFarms(4);
-          raid.setFlames(6);
-
+      type = setLevelDetail(level, raid);
+          //Need to set specific card numbers according to level
           // loop that generates cards
-          for(var p:number = 1; p <= 13; p++){
+        for(var r:number = 1; r <= raid.getCardNum(); r++){
 
-              //check if def Symbol exists, switches symbol if not and resets flame boolean.
-              if(raid.getHats() == 0){
-                  hasSymbol = defSymbol[1];
-                  isFlame = true;
+            //check if def Symbol exists, switches symbol if not and resets flame boolean.
+            if(raid.getHats() == 0){
+                hasSymbol = defSymbol[1];
+                isFlame = true;
+            }
+
+            if(raid.getDolls() == 0){
+                hasSymbol = defSymbol[2];
+                isFlame = true;
+
+            }
+
+            if(raid.getFarms() == 0){
+                hasSymbol = defSymbol[3];
+
+            }
+
+            //REFACTOR into seperate function
+            // Checks specific def symbols if all available flames have been assigned
+            //console.log("flame: ", isFlame + "Hats: ", raid.getHats());
+            console.log("\nBEFORE: numFlames: ", raid.getFlames());
+            if(isFlame == true){
+              if(raid.getFlames() == 0){
+                  isFlame = false;
               }
 
-              if(raid.getDolls() == 0){
-                  hasSymbol = defSymbol[2];
-                  isFlame = true;
-
-              }
-
-              if(raid.getFarms() == 0){
-                  hasSymbol = defSymbol[3];
-
-              }
-
-              //REFACTOR into seperate function
-              // Checks specific def symbols if all available flames have been assigned
-              if(isFlame == true){
-
-                  if(hasSymbol == "hat"){
-                      if(raid.getHats() <= 2) {
-                          isFlame = false;
-                      }
-                      else{
-                        raid.setFlames(raid.getFlames() - 1);
-                      }
-                  }
-                  if (hasSymbol == 'doll'){
-                      if(raid.getDolls() <= 2){
-                          isFlame = false;
-                      }
-                      else{
-                        raid.setFlames(raid.getFlames() - 1);
-                      }
-                  }
-                   if(hasSymbol == "farm"){
-                       if(raid.getFarms() <= 2){
-                           isFlame = false;
-                       }
-                       else{
-                         raid.setFlames(raid.getFlames() - 1);
-                       }
-                  }
-                  if(raid.getFlames() == 0){
+              if(hasSymbol == "hat"){
+                  if(raid.getHats() <= 2) {
                       isFlame = false;
                   }
-              }
 
-              // add penalty to cards
-              //var penalty:string[] = ["Fire", "Wound", "Ninja", "Cancel-Block", "Support-Block", "Pass-Left", "Pass-Right", "None"];
+                  else{
+                    console.log("SUBTRACT");
+                    raid.setFlames(raid.getFlames() - 1);
+                  }
+                }
 
-              //hat penalties
-              //REFACTOR: into seperate function
-              //console.log(raid.getHats());
-              startLevelPenalties(hasSymbol, isFlame, penalty, raid);
+              if(hasSymbol == 'doll'){
+                  if(raid.getDolls() <= 2){
+                      isFlame = false;
+                  }
 
-              // if(hasSymbol == "hat" && isFlame == true){
-              //     if(penaltyToggle == 0){
-              //       hasPenalty = penalty[0];
-              //       penaltyToggle = 1;
-              //
-              //     }
-              //     else{
-              //       hasPenalty = penalty[7];
-              //     }
-              //
-              // }
-              // else if(hasSymbol == "hat" && isFlame == false){
-              //   if(penaltyToggle == 0){
-              //     hasPenalty = penalty[0];
-              //     penaltyToggle = 1;
-              //   }
-              //   else{
-              //     penaltyToggle = 0;
-              //   }
-              //
-              // }
-              //
-              // if(hasSymbol == "doll" && isFlame == true){
-              //   if(penaltyToggle == 0){
-              //     hasPenalty = penalty[0];
-              //     penaltyToggle = 1;
-              //   }
-              //   else{
-              //     penaltyToggle = 0;
-              //   }
-              //
-              // }
-              // else if(hasSymbol == "doll" && isFlame == false){
-              //   if(penaltyToggle == 0){
-              //     hasPenalty = penalty[0];
-              //     penaltyToggle = 1;
-              //   }
-              //   else{
-              //     penaltyToggle = 0;
-              //   }
-              //
-              // }
-              //
-              // if(hasSymbol == "farm" && isFlame == true){
-              //   if(penaltyToggle == 0){
-              //     hasPenalty = penalty[0];
-              //     penaltyToggle = 1;
-              //   }
-              //   else{
-              //     penaltyToggle = 0;
-              //   }
-              //
-              // }
-              // else if(hasSymbol == "farm" && isFlame == false){
-              //   if(penaltyToggle == 0){
-              //     hasPenalty = penalty[0];
-              //     penaltyToggle = 1;
-              //   }
-              //   else{
-              //     penaltyToggle = 0;
-              //   }
-              //
-              // }
+                  else{
+                    console.log("SUBTRACT");
+                    raid.setFlames(raid.getFlames() - 1);
+                  }
+                }
 
-              // assigns builds current raider card specifics
-              let raider:Raider = {
-                  id: generateID(type, level.toString(), p.toString()),
-                  type: "Plunderer",
-                  level: level,
-                  setNum: p,
-                  flame: isFlame,
-                  defSymbol: hasSymbol,
-                  penalty: hasPenalty,
-                  bossPenalty: "none",
+                //console.log("farms: ", raid.getFarms());
+                //console.log("flames: ", isFlame);
 
-              };
+               if(hasSymbol == "farm"){
+                   if(raid.getFarms() <= 2){
+                       isFlame = false;
+                   }
 
-              card_array.push(raider);
+                   else{
+                     console.log("SUBTRACT");
+                     raid.setFlames(raid.getFlames() - 1);
+                   }
+                }
+            }
 
-              // decrements the def symbol count after being assigned.
-              if(hasSymbol == "hat" && raid.getHats() > 0){
+            console.log("AFTER: numFlames: ", raid.getFlames() + " flames: ", isFlame);
 
-                  raid.setHats(raid.getHats() - 1);
-               }
+            // add penalty to cards
+            //var penalty:string[] = ["Fire", "Wound", "Ninja", "Cancel-Block", "Support-Block", "Pass-Left", "Pass-Right", "None"];
 
-              if(hasSymbol == "doll" && raid.getDolls()> 0){
-                raid.setDolls(raid.getDolls() - 1);
-              }
+            //hat penalties
+            //REFACTOR: into seperate function
+            hasPenalty = startLevelPenalties(level, hasSymbol, isFlame, penalty, raid);
 
-              if(hasSymbol == "farm" && raid.getFarms() > 0){
-                  raid.setFarms(raid.getFarms() - 1);
-              }
+            // assigns builds current raider card specifics
+            let raider:Raider = {
+                id: generateID(type, level.toString(), r.toString()),
+                type: "Plunderer",
+                level: level,
+                setNum: r,
+                flame: isFlame,
+                defSymbol: hasSymbol,
+                penalty: hasPenalty,
+                bossPenalty: "none",
 
-          }
+            };
 
-          level++;
-      }
+            card_array.push(raider);
 
-      // if (level == 3){
-      //     hats_count = 3;
-      //     dolls_count = 5;
-      //     farms_count = 4;
-      //     flames_count = 6;
-      //
-      //     level++;
-      // }
-      //
-      // if (level == 4){
-      //     hats_count = 3;
-      //     dolls_count = 5;
-      //     farms_count = 4;
-      //     flames_count = 6;
-      //
-      //     level++;
-      // }
-      //
-      // if (level == 5){
-      //     hats_count = 1;
-      //     dolls_count = 1;
-      //     farms_count = 1;
-      //     flames_count = 4;
-      //
-      //     level++;
-      // }
-      //
-      // if (level == 6){
-      //     hats_count = 1;
-      //     dolls_count = 1;
-      //     farms_count = 1;
-      //     flames_count = 7;
-      //
-      // }
+            // decrements the def symbol count after being assigned.
+            if(hasSymbol == "hat" && raid.getHats() > 0){
+                raid.setHats(raid.getHats() - 1);
 
-  }
+             }
 
+            if(hasSymbol == "doll" && raid.getDolls() > 0){
+              raid.setDolls(raid.getDolls() - 1);
+            }
 
+            if(hasSymbol == "farm" && raid.getFarms() > 0){
+                raid.setFarms(raid.getFarms() - 1);
+            }
+            //console.log("hats: ", raid.getHats() + " dolls: ", raid.getDolls() + " farms: ", raid.getFarms());
+        }
+    }
 
   // function addPenalties(){
   //   startLevelPenalties();
@@ -391,44 +288,91 @@ class RaiderGeneration{
   //   bossPenalties();
   // }
 
-  function startLevelPenalties(symbol: string, flame: boolean, penalties: string[], raid: any){
+  function setLevelDetail(level: number, raid: any){
+    var type: string = "";
+
+    if (level == 1 || level == 2){
+      type = "P";
+      raid.setHats(4);
+      raid.setDolls(4);
+      raid.setFarms(4);
+      raid.setFlames(6);
+      raid.setCardNum(13);
+    }
+    else if (level == 3 || level == 4){
+      type = "P";
+      raid.setHats(3);
+      raid.setDolls(5);
+      raid.setFarms(4);
+      raid.setFlames(6);
+      raid.setCardNum(13);
+
+    }
+    else if (level == 5){
+      type = "L";
+      raid.setHats(1);
+      raid.setDolls(1);
+      raid.setFarms(1);
+      raid.setFlames(4);
+      raid.setCardNum(7);
+    }
+    else if (level == 6){
+      type = "B";
+      raid.setHats(1);
+      raid.setDolls(1);
+      raid.setFarms(1);
+      raid.setFlames(7);
+      raid.setCardNum(7);
+    }
+
+    return type;
+  }
+
+  function startLevelPenalties(level:number, symbol:string, flame:boolean, penalties:string[], raid:any){
+    var penalty: string = "";
+
     if(symbol == "hat"){
       if(flame == true){
-        flameHatPenalty(1, penalties, raid)
+        //console.log("toggle: ", raid.getToggle());
+        penalty = flameHatPenalty(level, penalties, raid)
       }
 
       else{
-        plainHatPenalty(1, penalties, raid)
+        penalty = plainHatPenalty(level, penalties, raid)
       }
     }
 
     else if(symbol == "doll"){
       if(flame == true){
-        flameDollPenalty(1, penalties, raid);
+        penalty = flameDollPenalty(level, penalties, raid);
       }
+
       else{
-        plainDollPenalty(1, penalties, raid);
+        penalty = plainDollPenalty(level, penalties, raid);
       }
     }
 
     else if(symbol == "farm"){
       if(flame == true){
-        flameFarmPenalty(1, penalties, raid);
+        penalty = flameFarmPenalty(level, penalties, raid);
       }
-      else{
-        plainFarmPenalty(1, penalties, raid);
 
+      else{
+        penalty = plainFarmPenalty(level, penalties, raid);
       }
     }
 
     else if(symbol == "none"){
       if(flame == true){
-
+        penalty = blankFlamePenalty(level, penalties, raid);
       }
-      else{
 
+      else{
+        penalty = blankPlainPenalty(level, penalties, raid);
       }
     }
+
+    return penalty;
     // addDollPenalties();
     // addFarmPenalties();
     // addBlankPenalties();
@@ -464,116 +408,143 @@ class RaiderGeneration{
   // }
 
   // Function Description: Add a penalty to a card with flames and no defensive symbols
-  function blankFlamePenalties(level: number, penalty_array: string [], raid: any){
+  function blankFlamePenalty(level: number, penalty_array: string [], raid: any): string{
+    var penalty: string = "";
+
     if(raid.getToggle() == 0){
       raid.setToggle(1);
 
       if(level == 1 || level == 2 || level == 5){
-        return penalty_array[0];
+        penalty = penalty_array[0];
       }
       else if(level == 3 || level == 4){
-        return penalty_array[1];
+        penalty = penalty_array[1];
       }
     }
 
     else if(raid.getToggle() == 1){
       raid.setToggle(2);
       if(level == 5){
-        return penalty_array[1]
+        penalty = penalty_array[1]
       }
 
     else if(raid.getToggle() == 2)
       raid.setToggle(3);
       if(level == 5){
-        return penalty_array[2];
+        penalty = penalty_array[2];
       }
     }
 
     else if(raid.getToggle() == 3){
       raid.setToggle(0);
       if(level == 5){
-        return penalty_array[4];
+        penalty = penalty_array[4];
       }
     }
 
+    return penalty;
   }
 
   // Function Description: Add a penalty to a card with no flame and no defensive symbols attached.
-  function blankPlainPenalties(level: number, penalty_array: string[], raid: any){
+  function blankPlainPenalty(level: number, penalty_array: string[], raid: any): string{
+    var penalty: string = "";
+
       if(raid.getToggle() == 0){
         raid.setToggle(1);
 
         if(level == 1 || level == 2){
-          return penalty_array[0];
+          penalty = penalty_array[0];
         }
 
         else if(level == 3 || level == 4){
-          return penalty_array[1];
+          penalty = penalty_array[1];
         }
       }
+
+      return penalty
   }
 
-  function flameFarmPenalty(level: number, penalty_array: string[], raid: any){
+  function flameFarmPenalty(level: number, penalty_array: string[], raid: any): string{
+      var penalty: string = "";
+
       if(raid.getToggle() == 0){
         raid.setToggle(1);
 
         if(level == 1 || level == 2 || level == 3 || level == 4){
-            return penalty_array[0];
+            penalty = penalty_array[0];
           }
       }
+
       else if(raid.getToggle() == 1){
         raid.setToggle(0);
 
         if (level == 1 || level == 2 || level == 3 || level == 4){
-          return penalty_array[1];
+          penalty = penalty_array[1];
         }
       }
+
+      return penalty;
   }
 
-  function plainFarmPenalty(level: number, penalty_array: string[], raid: any){
+  function plainFarmPenalty(level: number, penalty_array: string[], raid: any): string{
+    var penalty: string = "";
+
     if(raid.getToggle() == 0){
       raid.setToggle(1);
+
       if(level == 1 || level == 2 || level == 3 || level == 4){
-        return penalty_array[4];
+        penalty = penalty_array[4];
       }
     }
     else if(raid.getToggle() == 1){
       raid.setToggle(0);
+
       if(level == 1 || level == 2){
-        return penalty_array[2]
+        penalty = penalty_array[2]
       }
+
       else if(level == 3){
-        return penalty_array[5];
+        penalty = penalty_array[5];
       }
+
       else if(level == 4){
-        return penalty_array[6];
+        penalty = penalty_array[6];
       }
     }
+
+    return penalty;
   }
 
-  function flameDollPenalty(level: number, penalty_array: string[], raid: any){
+  function flameDollPenalty(level: number, penalty_array: string[], raid: any): string{
+    var penalty: string = "";
+
     if(raid.getToggle() == 0){
       raid.setToggle(1);
+
       if(level == 1 || level == 2 || level == 3 || level == 4){
-        return penalty_array[0];
+        penalty = penalty_array[0];
       }
     }
 
     else{
+      raid.setToggle(0);
       if (level == 1 || level == 2 || level == 3 || level == 4){
-        return penalty_array[1];
+        penalty = penalty_array[1];
       }
     }
+    return penalty;
   }
 
   // Description: Add penalties to a card with a doll def symbol and without a flame attached.
   // Parameters:
-  function plainDollPenalty(level: number, penalty_array: string[], raid: any){
+  function plainDollPenalty(level: number, penalty_array: string[], raid: any): string{
+    var penalty: string = "";
 
     if(raid.getToggle() == 0){
       raid.setToggle(1);
+
       if(level == 1 || level == 2 || level == 3 || level == 4){
-        return penalty_array[7];
+        penalty = penalty_array[7];
       }
     }
 
@@ -581,24 +552,29 @@ class RaiderGeneration{
       raid.setToggle(2);
 
       if(level == 1 || level == 2 || level == 5){
-        return penalty_array[2];
+        penalty = penalty_array[2];
       }
 
       else if(level == 3 || level == 4){
-        return penalty_array[3];
+        penalty = penalty_array[3];
       }
+      raid.setToggle(0);
     }
 
     else{
       raid.setToggle(0);
 
+
       if(level == 3){
-        return penalty_array[5];
+        penalty = penalty_array[5];
       }
+
       else if(level == 4){
-        return penalty_array[6];
+        penalty = penalty_array[6];
       }
     }
+
+    return penalty;
   }
 
   // Function description: Adds penalties associated with hat def symbols to cards judged accurate by a variety of parameters
@@ -607,58 +583,73 @@ class RaiderGeneration{
   //              p_toggle: which penalty in a defined set of 2 or 3 should be applied
   //              level: the level of the card
   //              penalty_array: the array of penalties that can be applied
-  function flameHatPenalty(level: number, penalty_array: string[], raid: any){
+  function flameHatPenalty(level: number, penalty_array: string[], raid: any): string{
     //var penalty_array:string[] = ["Fire", "Wound", "Ninja", "Cancel-Block", "Support-Block", "Pass-Left", "Pass-Right", "None"];
 
+    var penalty: string = "";
     // if toggle is zero assign correct penalty
     if(raid.getToggle() == 0){
       raid.setToggle(1); // sets the secondary penalty on the next flame card
+
       if (level == 1 || level == 2){
-        return penalty_array[1]; // wound
+        penalty = penalty_array[1]; // wound
       }
+
       else if (level == 3 || 4){
-        return penalty_array[0]; // fire
+        penalty = penalty_array[0]; // fire
       }
     }
 
     // if p_toggle is not zero assign correct penalty
     else{
+      raid.setToggle(0);
+
       if (level == 1 || level == 2 || level == 3){
-        return penalty_array[7]; // none
+        penalty = penalty_array[7]; // none
       }
 
       else if (level == 4){
-        return penalty_array[6]; // pass right
+        penalty = penalty_array[6]; // pass right
       }
     }
+
+    return penalty;
   }
 
-  function plainHatPenalty(level: number , penalty_array: string[], raid: any){
+  function plainHatPenalty(level: number , penalty_array: string[], raid: any): string{
 
   // if Flame is false assign correct penalty
+    var penalty: string = "";
 
     if(raid.getToggle() == 0){
+      raid.setToggle(1); // sets the secondary penalty on the next flame card
+
       if (level == 1 || level == 2){
-        raid.setToggle(1); // sets the secondary penalty on the next flame card
-        return penalty_array[2]; // ninja
-      }
-      else if (level == 3){
-        return penalty_array[5]; // pass left
-      }
-      else if (level == 4){
-        return penalty_array[7]; // none
-      }
-      else if (level == 5){
-        return penalty_array[1]; // wound
+        penalty = penalty_array[2]; // ninja
       }
 
-    }
-    else{
-      if (level == 1 || level == 2){
-        raid.setToggle(0); // returns to the primary penalty for the next card
-        return penalty_array[3]; // cancel-block
+      else if (level == 3){
+        penalty = penalty_array[5]; // pass left
+      }
+
+      else if (level == 4){
+        penalty = penalty_array[7]; // none
+      }
+
+      else if (level == 5){
+        penalty = penalty_array[1]; // wound
       }
     }
+
+    else{
+      raid.setToggle(0); // returns to the primary penalty for the next card
+
+      if (level == 1 || level == 2){
+        penalty = penalty_array[3]; // cancel-block
+      }
+    }
+
+    return penalty;
   }
 
   // generates the correct string ID.
