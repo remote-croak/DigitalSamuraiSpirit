@@ -175,7 +175,9 @@ class RaiderGeneration{
           //Need to set specific card numbers according to level
           // loop that generates cards
         for(var r:number = 1; r <= raid.getCardNum(); r++){
-
+            if(level == 5){
+              isFlame = false;
+            }
             //check if def Symbol exists, switches symbol if not and resets flame boolean.
             if(raid.getHats() == 0){
                 hasSymbol = defSymbol[1];
@@ -202,9 +204,18 @@ class RaiderGeneration{
                   isFlame = false;
               }
 
+              // flame assignment changes at levels 3, 4, 5
               if(hasSymbol == "hat"){
-                  if(raid.getHats() <= 2) {
+                  if(raid.getHats() < 3 && level < 3) {
                       isFlame = false;
+                  }
+
+                  else if (raid.getHats() < 2 && level <= 4){
+                    isFlame = false;
+                  }
+
+                  else if(raid.getHats() < 1 && level == 5){
+                    isFlame = false;
                   }
 
                   else{
@@ -214,7 +225,11 @@ class RaiderGeneration{
                 }
 
               if(hasSymbol == 'doll'){
-                  if(raid.getDolls() <= 2){
+                  if(raid.getDolls() < 3){
+                      isFlame = false;
+                  }
+
+                  else if(raid.getDolls() < 1 && level == 5){
                       isFlame = false;
                   }
 
@@ -229,6 +244,10 @@ class RaiderGeneration{
 
                if(hasSymbol == "farm"){
                    if(raid.getFarms() <= 2){
+                       isFlame = false;
+                   }
+
+                   if(raid.getFarms() < 1 && level == 5){
                        isFlame = false;
                    }
 
@@ -338,6 +357,7 @@ class RaiderGeneration{
       }
 
       else{
+
         penalty = plainHatPenalty(level, penalties, raid)
       }
     }
@@ -597,10 +617,12 @@ class RaiderGeneration{
 
       else if (level == 3 || 4){
         penalty = penalty_array[0]; // fire
+        //raid.setToggle(0);
       }
     }
 
     // if p_toggle is not zero assign correct penalty
+    // toggle not working?
     else{
       raid.setToggle(0);
 
@@ -621,6 +643,7 @@ class RaiderGeneration{
   // if Flame is false assign correct penalty
     var penalty: string = "";
 
+    // if level == 3 and toggle is 1. toggle needs to be set to 0
     if(raid.getToggle() == 0){
       raid.setToggle(1); // sets the secondary penalty on the next flame card
 
@@ -628,7 +651,7 @@ class RaiderGeneration{
         penalty = penalty_array[2]; // ninja
       }
 
-      else if (level == 3){
+      if (level == 3){
         penalty = penalty_array[5]; // pass left
       }
 
@@ -649,6 +672,7 @@ class RaiderGeneration{
       }
     }
 
+    console.log("Penalty is: ", penalty);
     return penalty;
   }
 
