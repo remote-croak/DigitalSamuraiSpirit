@@ -200,7 +200,7 @@ class RaiderGeneration{
             //console.log("flame: ", isFlame + "Hats: ", raid.getHats());
             console.log("\nBEFORE: numFlames: ", raid.getFlames());
             if(isFlame == true){
-              if(raid.getFlames() == 0){
+              if(raid.getFlames() < 1){
                   isFlame = false;
               }
 
@@ -226,6 +226,10 @@ class RaiderGeneration{
 
               if(hasSymbol == 'doll'){
                   if(raid.getDolls() < 3){
+                      isFlame = false;
+                  }
+
+                  else if (raid.getDolls() <= 3 && level > 2 && level < 5){
                       isFlame = false;
                   }
 
@@ -474,6 +478,7 @@ class RaiderGeneration{
   function blankPlainPenalty(level: number, penalty_array: string[], raid: any): string{
     var penalty: string = "";
 
+      console.log("toggle: ", raid.getToggle());
       if(raid.getToggle() == 0){
         raid.setToggle(1);
 
@@ -508,12 +513,13 @@ class RaiderGeneration{
         }
       }
 
+      console.log("penalty: ", penalty);
       return penalty;
   }
 
   function plainFarmPenalty(level: number, penalty_array: string[], raid: any): string{
     var penalty: string = "";
-
+    console.log("toggle: ", raid.getToggle());
     if(raid.getToggle() == 0){
       raid.setToggle(1);
 
@@ -542,12 +548,13 @@ class RaiderGeneration{
       }
     }
 
+    console.log("penalty: ", penalty);
     return penalty;
   }
 
   function flameDollPenalty(level: number, penalty_array: string[], raid: any): string{
     var penalty: string = "";
-
+    console.log("toggle: ", raid.getToggle());
     if(raid.getToggle() == 0){
       raid.setToggle(1);
 
@@ -569,7 +576,7 @@ class RaiderGeneration{
   // Parameters:
   function plainDollPenalty(level: number, penalty_array: string[], raid: any): string{
     var penalty: string = "";
-
+    console.log("toggle: ", raid.getToggle());
     if(raid.getToggle() == 0){
       raid.setToggle(1);
 
@@ -583,17 +590,17 @@ class RaiderGeneration{
 
       if(level == 1 || level == 2 || level == 5){
         penalty = penalty_array[2];
+        raid.setToggle(0);
       }
 
       else if(level == 3 || level == 4){
         penalty = penalty_array[3];
       }
-      raid.setToggle(0);
+      //raid.setToggle(0);
     }
 
     else{
       raid.setToggle(0);
-
 
       if(level == 3){
         penalty = penalty_array[5];
@@ -618,6 +625,7 @@ class RaiderGeneration{
 
     var penalty: string = "";
     // if toggle is zero assign correct penalty
+    console.log("toggle: ", raid.getToggle());
     if(raid.getToggle() == 0){
       raid.setToggle(1); // sets the secondary penalty on the next flame card
 
@@ -652,7 +660,7 @@ class RaiderGeneration{
 
   // if Flame is false assign correct penalty
     var penalty: string = "";
-
+    console.log("toggle: ", raid.getToggle());
     // if level == 3 and toggle is 1. toggle needs to be set to 0
     if(raid.getToggle() == 0){
       raid.setToggle(1); // sets the secondary penalty on the next flame card
@@ -663,10 +671,12 @@ class RaiderGeneration{
 
       if (level == 3){
         penalty = penalty_array[5]; // pass left
+        raid.setToggle(0);
       }
 
       else if (level == 4){
         penalty = penalty_array[7]; // none
+        raid.setToggle(0);
       }
 
       else if (level == 5){
