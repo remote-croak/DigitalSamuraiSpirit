@@ -437,6 +437,7 @@ class RaiderGeneration{
       if(level == 1 || level == 2 || level == 5){
         penalty = penalty_array[0];
       }
+
       else if(level == 3 || level == 4){
         penalty = penalty_array[1];
       }
@@ -444,12 +445,15 @@ class RaiderGeneration{
 
     else if(raid.getToggle() == 1){
       raid.setToggle(2);
+
       if(level == 5){
         penalty = penalty_array[1]
       }
+    }
 
-    else if(raid.getToggle() == 2)
+    else if(raid.getToggle() == 2){
       raid.setToggle(3);
+
       if(level == 5){
         penalty = penalty_array[2];
       }
@@ -457,6 +461,7 @@ class RaiderGeneration{
 
     else if(raid.getToggle() == 3){
       raid.setToggle(0);
+
       if(level == 5){
         penalty = penalty_array[4];
       }
@@ -514,6 +519,11 @@ class RaiderGeneration{
 
       if(level == 1 || level == 2 || level == 3 || level == 4){
         penalty = penalty_array[4];
+      }
+
+      else if(level == 5){
+        raid.setToggle(0);
+        penalty = penalty_array[0];
       }
     }
     else if(raid.getToggle() == 1){
