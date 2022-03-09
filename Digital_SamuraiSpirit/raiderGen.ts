@@ -147,7 +147,7 @@ class RaiderGeneration{
 
 
       card_array = [];
-      buildRaider(5);
+      buildRaider(6);
 
       printRaider();
 
@@ -178,6 +178,11 @@ class RaiderGeneration{
             if(level == 5){
               isFlame = false;
             }
+
+            if(level == 6){
+              isFlame = true;
+            }
+
             //check if def Symbol exists, switches symbol if not and resets flame boolean.
             if(raid.getHats() == 0){
                 hasSymbol = defSymbol[1];
@@ -187,7 +192,6 @@ class RaiderGeneration{
             if(raid.getDolls() == 0){
                 hasSymbol = defSymbol[2];
                 isFlame = true;
-
             }
 
             if(raid.getFarms() == 0){
@@ -199,7 +203,7 @@ class RaiderGeneration{
             // Checks specific def symbols if all available flames have been assigned
             //console.log("flame: ", isFlame + "Hats: ", raid.getHats());
             console.log("\nBEFORE: numFlames: ", raid.getFlames());
-            if(isFlame == true){
+            if(isFlame == true && level != 6){
               if(raid.getFlames() < 1){
                   isFlame = false;
               }
@@ -269,7 +273,15 @@ class RaiderGeneration{
 
             //hat penalties
             //REFACTOR: into seperate function
-            hasPenalty = startLevelPenalties(level, hasSymbol, isFlame, penalty, raid);
+            if(level == 6){
+              hasPenalty = bossPenalties(hasSymbol, isFlame, penalty, raid);
+              bossPenalty = bossPenalties(hasSymbol, isFlame, penalty, raid);
+
+            }
+
+            else{
+              hasPenalty = startLevelPenalties(level, hasSymbol, isFlame, penalty, raid);
+            }
 
             // assigns builds current raider card specifics
             let raider:Raider = {
@@ -351,12 +363,42 @@ class RaiderGeneration{
     return type;
   }
 
+  function bossPenalties(symbol: string, penalties: string[], raid: any){
+    //var penalty: string[] = ["Fire", "Wound", "Ninja", "Cancel-Block", "Cancel-Support", "Pass-Left", "Pass-Right", "None"];
+    var bossPenalty: string[] = ["Demon", "Swords", "Meeple", "Discard"];
+    var penalty: string = "";
+
+    // set toggle system to assign multiple penalties.
+    // handle each card as a unique
+    // for randomization shuffle penalty arrays or use a random number to select the penalties
+    if(symbol == "hat"){
+      if(raid.getToggle() == 0 ){
+        penalty = penalties[2];
+    }
+
+    else if(symbol == "doll"){
+      penalty = bossPenalty[2];
+    }
+
+    else if(symbol == "farm"){
+      penalty = penalties[0];
+    }
+
+    else{
+      if(raid.getToggle() == 0){
+
+      }
+    }
+
+    return penalty;
+  }
+
   function startLevelPenalties(level:number, symbol:string, flame:boolean, penalties:string[], raid:any){
     var penalty: string = "";
 
     if(symbol == "hat"){
       if(flame == true){
-        //console.log("toggle: ", raid.getToggle());
+
         penalty = flameHatPenalty(level, penalties, raid)
       }
 
