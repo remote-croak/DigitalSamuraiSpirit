@@ -1,6 +1,4 @@
-import hxjsonast.*;
 
-import yaml.*;
 class BuildDeck {
 
     private var commonRaider:Array<Raider> = [];

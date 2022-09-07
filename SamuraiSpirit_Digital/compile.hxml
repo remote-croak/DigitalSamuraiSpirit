@@ -1,4 +1,5 @@
 -cp src
+-D windowSize=2048x1080
 -lib heaps
 -lib hlsdl
 -hl bin/samuraispirit.cpp
