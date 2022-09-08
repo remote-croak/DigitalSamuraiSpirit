@@ -53,7 +53,7 @@ class SamuraiSpirit extends hxd.App {
         selectChar.text = "Select Your Samurai";
         selectChar.setPosition(x,y);
         selectChar.scale(4);
-        var samImg = hxd.Res.art.samurai1SM.toTile();
+        //var samImg = hxd.Res.art.samurai1SM.toTile();
     
        //var sam1Image = hxd.Res.hxlogo.toTexture();
         //var img = sam1Image.toTile();
@@ -65,6 +65,7 @@ class SamuraiSpirit extends hxd.App {
         // var sam7Image = hxd.Res.art.samurai-8-sm.toTile();
        
         var sam1 = new h2d.Graphics(s2d);
+        var samImg = hxd.Res.art.samurai2SM.toTile();
         var sam2 = new h2d.Graphics(s2d);
         var sam3 = new h2d.Graphics(s2d);
         var sam4 = new h2d.Graphics(s2d);
@@ -74,11 +75,11 @@ class SamuraiSpirit extends hxd.App {
 
         sam1.lineStyle(6, 0xFFFFFF);
         //sam1.beginFill(0xEA8220);
-        sam1.drawTile(80, 79,samImg);
-        sam1.drawRect(s2d.width/2, s2d.height/2 - 192, 136, 192);
+        //sam1.drawTile(s2d.width/2, s2d.height/2 - 192,samImg);
+        sam1.drawRect(s2d.width/2, s2d.height/2 - 192, 140, 200);
+        sam1.drawTile(s2d.width/2, s2d.height/2 - 192,samImg);
         trace("Height: " + s2d.height + "by Half: " + s2d.height/2, "Image: " + samImg.height);
         trace("Width: " + s2d.width + "by Half: " + s2d.width/2, "Image: " + samImg.width);
-        sam1.endFill();
 
         sam2.lineStyle(6, 0xFFFFFF);
         sam2.beginFill(0xEA8220);
