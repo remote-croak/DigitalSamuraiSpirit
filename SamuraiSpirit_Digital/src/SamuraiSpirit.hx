@@ -65,44 +65,56 @@ class SamuraiSpirit extends hxd.App {
         // var sam7Image = hxd.Res.art.samurai-8-sm.toTile();
        
         var sam1 = new h2d.Graphics(s2d);
-        var samImg = hxd.Res.art.samurai2SM.toTile();
         var sam2 = new h2d.Graphics(s2d);
         var sam3 = new h2d.Graphics(s2d);
         var sam4 = new h2d.Graphics(s2d);
         var sam5 = new h2d.Graphics(s2d);
         var sam6 = new h2d.Graphics(s2d);
         var sam7 = new h2d.Graphics(s2d);
+        var samImg1 = hxd.Res.art.samurai1SM.toTile();
+        var samImg2 = hxd.Res.art.samurai2SM.toTile();
+        var samImg3 = hxd.Res.art.samurai3SM.toTile();
+        var samImg4 = hxd.Res.art.samurai4SM.toTile();
+        var samImg5 = hxd.Res.art.samurai5SM.toTile();
+        var samImg6 = hxd.Res.art.samurai6SM.toTile();
+        var samImg7 = hxd.Res.art.samurai7SM.toTile();
 
         sam1.lineStyle(6, 0xFFFFFF);
         //sam1.beginFill(0xEA8220);
         //sam1.drawTile(s2d.width/2, s2d.height/2 - 192,samImg);
-        sam1.drawRect(s2d.width/2, s2d.height/2 - 192, 140, 200);
-        sam1.drawTile(s2d.width/2, s2d.height/2 - 192,samImg);
-        trace("Height: " + s2d.height + "by Half: " + s2d.height/2, "Image: " + samImg.height);
-        trace("Width: " + s2d.width + "by Half: " + s2d.width/2, "Image: " + samImg.width);
+        sam1.drawTile(s2d.width/2, s2d.height/2 - 192, samImg1);
+        // sam1.drawRect(s2d.width/2, s2d.height/2 - 192, 136, 192);
+        trace("Height: " + s2d.height + "by Half: " + s2d.height/2, "Image: " + samImg2.height);
+        trace("Width: " + s2d.width + "by Half: " + s2d.width/2, "Image: " + samImg2.width);
 
         sam2.lineStyle(6, 0xFFFFFF);
-        sam2.beginFill(0xEA8220);
+        // sam2.beginFill(0xEA8220);
+        sam2.drawTile(s2d.width/2 - 136, s2d.height/2 - 192, samImg2);
         sam2.drawRect(s2d.width/2 - 136, s2d.height/2 - 192, 136, 192);
         
         sam3.lineStyle(6, 0xFFFFFF);
-        sam3.beginFill(0xEA8220);
+        // sam3.beginFill(0xEA8220);
+        sam3.drawTile(s2d.width/2 + 136, s2d.height/2 - 192, samImg3);
         sam3.drawRect(s2d.width/2 + 136, s2d.height/2 - 192, 136, 192);
 
         sam4.lineStyle(6, 0xFFFFFF);
-        sam4.beginFill(0xEA8220);
+        // sam4.beginFill(0xEA8220);
+        sam4.drawTile(s2d.width/2 - 68, s2d.height/2, samImg4);
         sam4.drawRect(s2d.width/2 - 68, s2d.height/2, 136, 192);
 
         sam5.lineStyle(6, 0xFFFFFF);
-        sam5.beginFill(0xEA8220);
+        // sam5.beginFill(0xEA8220);
+        sam5.drawTile(s2d.width/2 - (68 + 136), s2d.height/2, samImg5);
         sam5.drawRect(s2d.width/2 - (68 + 136), s2d.height/2, 136, 192);
        
         sam6.lineStyle(6, 0xFFFFFF);
-        sam6.beginFill(0xEA8220);
+        // sam6.beginFill(0xEA8220);
+        sam6.drawTile(s2d.width/2 + 68, s2d.height/2, samImg6);
         sam6.drawRect(s2d.width/2 + (68), s2d.height/2, 136, 192);
 
         sam7.lineStyle(6, 0xFFFFFF);
-        sam7.beginFill(0xEA8220);
+        // sam7.beginFill(0xEA8220);
+        sam7.drawTile(s2d.width/2 + (68 + 136), s2d.height/2, samImg7);
         sam7.drawRect(s2d.width/2 + (68 + 136), s2d.height/2, 136, 192);
        
         t = new h2d.Text(hxd.res.DefaultFont.get(), s2d);
