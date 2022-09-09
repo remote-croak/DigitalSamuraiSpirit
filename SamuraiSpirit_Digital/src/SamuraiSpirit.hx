@@ -65,6 +65,7 @@ class SamuraiSpirit extends hxd.App {
         // var sam7Image = hxd.Res.art.samurai-8-sm.toTile();
        
         var sam1 = new h2d.Graphics(s2d);
+        var samImg = hxd.Res.art.samurai2SM.toTile();
         var sam2 = new h2d.Graphics(s2d);
         var sam3 = new h2d.Graphics(s2d);
         var sam4 = new h2d.Graphics(s2d);
