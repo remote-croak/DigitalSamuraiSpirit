@@ -40,7 +40,15 @@ class Samurai{
 
     }
 
-    public function setHealth(){
+    public function setBattleTrack(){
     
+    }
+
+    public function getBattleTrack(){
+        return this.battleTrack;
+    }
+
+    public function getName(){
+        return this.name;
     }
 }

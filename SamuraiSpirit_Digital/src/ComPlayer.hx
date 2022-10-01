@@ -1,0 +1,4 @@
+class ComPlayer extends Player{
+
+    
+}
