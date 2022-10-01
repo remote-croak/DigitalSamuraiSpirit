@@ -14,10 +14,26 @@ class SamuraiSpirit extends hxd.App {
     var cardCount: h2d.Text;
     var numPlayers:h2d.Text;
     var selectChar:h2d.Text;
+
+    var p1Name:h2d.Text;
+    var p1Samurai:h2d.Text;
+    var p2Name:h2d.Text;
+    var p2Samurai:h2d.Text;
+    var p3Name:h2d.Text;
+    var p3Samurai:h2d.Text;
+    var p4Name:h2d.Text;
+    var p4Samurai:h2d.Text;
+    var p5Name:h2d.Text;
+    var p5Samurai:h2d.Text;
+    var p6Name:h2d.Text;
+    var p6Samurai:h2d.Text;
+    var p7Name:h2d.Text;
+    var p7Samurai:h2d.Text;
+
     var rNum:Int;
     var x:Int = 200;
     var y:Int = 200;
-    var confirm = false;
+    var confirm:Bool = false;
     
   
     override function init(){
@@ -80,43 +96,47 @@ class SamuraiSpirit extends hxd.App {
         var samImg6 = hxd.Res.art.samurai6SM.toTile();
         var samImg7 = hxd.Res.art.samurai7SM.toTile();
 
-        sam1.lineStyle(6, 0xFFFFFF);
+
+        sam1.drawTile(s2d.width/2, s2d.height/2 - 192, samImg1);
+        //sam1.lineStyle(6, 0xFFFFFF , 1);
         //sam1.beginFill(0xEA8220);
         //sam1.drawTile(s2d.width/2, s2d.height/2 - 192,samImg);
-        sam1.drawTile(s2d.width/2, s2d.height/2 - 192, samImg1);
+        //sam1.drawRect(s2d.width/2, s2d.height/2 - 192, 136, 192);
+        
         // sam1.drawRect(s2d.width/2, s2d.height/2 - 192, 136, 192);
         trace("Height: " + s2d.height + "by Half: " + s2d.height/2, "Image: " + samImg2.height);
-        trace("Width: " + s2d.width + "by Half: " + s2d.width/2, "Image: " + samImg2.width);
-
-        sam2.lineStyle(6, 0xFFFFFF);
-        // sam2.beginFill(0xEA8220);
-        sam2.drawTile(s2d.width/2 - 136, s2d.height/2 - 192, samImg2);
-        sam2.drawRect(s2d.width/2 - 136, s2d.height/2 - 192, 136, 192);
         
-        sam3.lineStyle(6, 0xFFFFFF);
+        trace("Width: " + s2d.width + "by Half: " + s2d.width/2, "Image: " + samImg2.width);
+        sam2.drawTile(s2d.width/2 - 136, s2d.height/2 - 192, samImg2);
+        // sam2.lineStyle(6, 0xFFFFFF);
+        // sam2.beginFill(0xEA8220);
+        //sam2.drawTile(s2d.width/2 - 136, s2d.height/2 - 192, samImg2);
+        // sam2.drawRect(s2d.width/2 - 136, s2d.height/2 - 192, 136, 192);
+        
+        // sam3.lineStyle(6, 0xFFFFFF);
         // sam3.beginFill(0xEA8220);
         sam3.drawTile(s2d.width/2 + 136, s2d.height/2 - 192, samImg3);
-        sam3.drawRect(s2d.width/2 + 136, s2d.height/2 - 192, 136, 192);
+        // sam3.drawRect(s2d.width/2 + 136, s2d.height/2 - 192, 136, 192);
 
-        sam4.lineStyle(6, 0xFFFFFF);
+        // sam4.lineStyle(6, 0xFFFFFF);
         // sam4.beginFill(0xEA8220);
         sam4.drawTile(s2d.width/2 - 68, s2d.height/2, samImg4);
-        sam4.drawRect(s2d.width/2 - 68, s2d.height/2, 136, 192);
+        // sam4.drawRect(s2d.width/2 - 68, s2d.height/2, 136, 192);
 
-        sam5.lineStyle(6, 0xFFFFFF);
+        // sam5.lineStyle(6, 0xFFFFFF);
         // sam5.beginFill(0xEA8220);
         sam5.drawTile(s2d.width/2 - (68 + 136), s2d.height/2, samImg5);
-        sam5.drawRect(s2d.width/2 - (68 + 136), s2d.height/2, 136, 192);
+        // sam5.drawRect(s2d.width/2 - (68 + 136), s2d.height/2, 136, 192);
        
-        sam6.lineStyle(6, 0xFFFFFF);
+        // sam6.lineStyle(6, 0xFFFFFF);
         // sam6.beginFill(0xEA8220);
         sam6.drawTile(s2d.width/2 + 68, s2d.height/2, samImg6);
-        sam6.drawRect(s2d.width/2 + (68), s2d.height/2, 136, 192);
+        // sam6.drawRect(s2d.width/2 + (68), s2d.height/2, 136, 192);
 
-        sam7.lineStyle(6, 0xFFFFFF);
+        // sam7.lineStyle(6, 0xFFFFFF);
         // sam7.beginFill(0xEA8220);
         sam7.drawTile(s2d.width/2 + (68 + 136), s2d.height/2, samImg7);
-        sam7.drawRect(s2d.width/2 + (68 + 136), s2d.height/2, 136, 192);
+        // sam7.drawRect(s2d.width/2 + (68 + 136), s2d.height/2, 136, 192);
        
         t = new h2d.Text(hxd.res.DefaultFont.get(), s2d);
         t.setPosition(x,y);
