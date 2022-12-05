@@ -30,6 +30,11 @@ class SamuraiSpirit extends hxd.App {
     var p7Name:h2d.Text;
     var p7Samurai:h2d.Text;
 
+    var sam1:h2d.Graphics;
+    var sam2:h2d.Graphics;
+
+    
+
     var rNum:Int;
     var x:Int = 200;
     var y:Int = 200;
@@ -48,6 +53,7 @@ class SamuraiSpirit extends hxd.App {
     override function init(){
 
         hxd.Res.initEmbed(); //load resources
+        //hxd.Window.getInstance().addEventTarget(assignSamurai);
 
         common = deck.loadCommon();
         lieut = deck.loadLieut();
@@ -80,6 +86,9 @@ class SamuraiSpirit extends hxd.App {
         var katsushiro:Samurai = new Samurai();
         var kikuchiyo:Samurai = new Samurai();
         var kyuzo:Samurai = new Samurai();
+
+        //var daiInteract = new h2d.Interactive();
+
         
         // There needs to be an eaiser way to assign samurai to the same player
         // Create function for each player that accepts a samurai as a parameter.
@@ -155,9 +164,9 @@ class SamuraiSpirit extends hxd.App {
         // var sam6Image = hxd.Res.art.samurai-7-sm.toTile();
         // var sam7Image = hxd.Res.art.samurai-8-sm.toTile();
        
-        var sam1 = new h2d.Graphics(s2d);
+        sam1 = new h2d.Graphics(s2d);
         var samImg = hxd.Res.art.samurai2SM.toTile();
-        var sam2 = new h2d.Graphics(s2d);
+        sam2 = new h2d.Graphics(s2d);
         var sam3 = new h2d.Graphics(s2d);
         var sam4 = new h2d.Graphics(s2d);
         var sam5 = new h2d.Graphics(s2d);
@@ -170,6 +179,11 @@ class SamuraiSpirit extends hxd.App {
         var samImg5 = hxd.Res.art.samurai5SM.toTile();
         var samImg6 = hxd.Res.art.samurai6SM.toTile();
         var samImg7 = hxd.Res.art.samurai7SM.toTile();
+
+        
+
+    
+
 
 
         sam1.drawTile(s2d.width/2, s2d.height/2 - 192, samImg1);
@@ -217,6 +231,9 @@ class SamuraiSpirit extends hxd.App {
         t.setPosition(x,y);
         t.scale(4);
 
+
+        hxd.Window.getInstance().addEventTarget(playerSelect);
+
     }
 
     static function main() {
@@ -229,6 +246,8 @@ class SamuraiSpirit extends hxd.App {
             trace(playerCount.text);
             distribute(getPlayerCount(playerCount.text), common, lieut, boss);
         }
+
+        
       
                 
         // if (hxd.Key.isReleased(hxd.Key.UP)){
@@ -259,9 +278,58 @@ class SamuraiSpirit extends hxd.App {
     }
     
     // assigns to the player their chosen samurai
-    function assignSamurai(sam:Samurai, p:Player){
+    function clickOnSamurai(event: hxd.Event){
+        //sam:Samurai, p:Player){
+        // if (event.kind == ERelease && (hxd.Window.mouseX == sam1.x) && (hxd.Window.mouseY == sam1.y)){
+        //     // samurai == object at mouse pos
+        //     // playerSelectSamurai(something, something);
+
+        // }
+    
+    }
+
+    function playerSelectSamurai(sam: Samurai, p: Player){
         p.setSamurai(sam);
     }
+
+    function playerSelect(select: hxd.Event){
+        
+        switch(select.kind){
+            
+            //case MOUSE_LEFT: trace("mouse is clicked");
+            case EPush: trace("mouse left has been pressed");
+                trace(
+                         "\nrelX: ", select.relX);
+
+                trace("Jack:", sam2.absX);
+                if (sam1.x == select.relX){
+                    trace("where are YOU");
+                }
+                // if (select.relY == sam1.x && mousePos.mouseY == sam1.y){
+                //     trace("hi Daisuke");
+
+                // }
+                
+            
+            case _:
+        }
+            //mouse on click
+            // get position of mouse
+            // if it matches one of seven player positions
+            // then the player is assigned to that position
+
+            // problem is simultaneous player input
+            // have to register multiple hardware inputs
+
+    }
+    // implement during polish phase
+    // function hoverOverSamurai(event : hxd.Event){
+    //     //ray trace the object to gain the information
+    //     // var imgAct = new h2d.Interactive(300, 100, img);
+    //     // var imgAct.onOver = fucntion(event : hxd.Event){
+
+    //     // }
+    // }
 
     function shuffleCards(numCards:Int, arr:Array<Raider>) : Array<Raider>{
         var card:Raider;
