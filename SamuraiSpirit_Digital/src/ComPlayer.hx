@@ -1,4 +1,4 @@
-class ComPlayer extends Player{
+class ComPlayer extends src.Player{
 
     
 }
