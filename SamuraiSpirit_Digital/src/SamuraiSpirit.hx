@@ -57,6 +57,7 @@ class SamuraiSpirit extends hxd.App {
     override function init(){
 
         hxd.Res.initEmbed(); //load resources
+        //hxd.Window.getInstance().addEventTarget(assignSamurai);
 
         common = deck.loadCommon();
         lieut = deck.loadLieut();
@@ -163,6 +164,9 @@ class SamuraiSpirit extends hxd.App {
         t.setPosition(x,y);
         t.scale(4);
 
+
+        hxd.Window.getInstance().addEventTarget(playerSelect);
+
     }
 
     static function main() {
@@ -205,7 +209,17 @@ class SamuraiSpirit extends hxd.App {
     }
     
     // assigns to the player their chosen samurai
-    function assignSamurai(sam:Samurai, p:Player){
+    function clickOnSamurai(event: hxd.Event){
+        //sam:Samurai, p:Player){
+        // if (event.kind == ERelease && (hxd.Window.mouseX == sam1.x) && (hxd.Window.mouseY == sam1.y)){
+        //     // samurai == object at mouse pos
+        //     // playerSelectSamurai(something, something);
+
+        // }
+    
+    }
+
+    function playerSelectSamurai(sam: Samurai, p: Player){
         p.setSamurai(sam);
     }
 
