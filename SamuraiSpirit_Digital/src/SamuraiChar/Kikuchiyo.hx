@@ -1,8 +1,20 @@
+package samuraiChar;
+
 class Kikuchiyo extends Samurai{
-    public override function init(){
+
+    public override function load(scene:h2d.Scene){
+        this.scene = scene;
         this.name = "Kikuchiyo";
         this.battleTrack = 10;
+        this.xPos = scene.width/2 + 68;
+        this.yPos = scene.height/2;
+
+        this.portrait = hxd.Res.art.samurai6SM.toTile();
+        
+        this.setupCharSel();
     }
+
+
 
     public override function humanKiai(){
 
@@ -29,4 +41,4 @@ class Kikuchiyo extends Samurai{
             this.beastForm = false;
         }
     }
-  }
+}
