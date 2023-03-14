@@ -1,12 +1,19 @@
+package samuraiChar;
+
 class Daisuke extends Samurai{
 
-    public override function init(){
+    public override function load(scene:h2d.Scene){
+        this.scene = scene;
         this.name = "Daisuke";
         this.battleTrack = 8;
-        //this.img;
-        //this.card;
+        this.xPos = scene.width/2 - 136;
+        this.yPos = scene.height/2 - 192;
+        this.portrait = hxd.Res.art.samurai1SM.toTile();
+        
+        this.setupCharSel();
+        
     }
-  
+
     public override function humanKiai(){
   
     }
@@ -33,4 +40,4 @@ class Daisuke extends Samurai{
         }
   
     }
-  }
+}

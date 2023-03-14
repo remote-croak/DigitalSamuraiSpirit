@@ -1,4 +1,3 @@
-
 class RaiderDeckDetails{
 
     private var _hats:Int;

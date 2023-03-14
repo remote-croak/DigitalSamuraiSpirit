@@ -1,4 +1,5 @@
-
+import samuraiChar.Kyuzo;
+import samuraiChar.Heihachi;
 
 class SamuraiSpirit extends hxd.App {
 
@@ -30,11 +31,15 @@ class SamuraiSpirit extends hxd.App {
     var p7Name:h2d.Text;
     var p7Samurai:h2d.Text;
 
-    var sam1:h2d.Graphics;
-    var sam2:h2d.Graphics;
-
+    // initalize samurai character variables
+    var daisuke:samuraiChar.Daisuke = new samuraiChar.Daisuke();
+    var gorobei:samuraiChar.Gorobei = new samuraiChar.Gorobei();
+    var heihachi:samuraiChar.Heihachi = new samuraiChar.Heihachi();
+    var kanbei:samuraiChar.Kanbei = new samuraiChar.Kanbei();
+    var katsushiro:samuraiChar.Katsushiro = new samuraiChar.Katsushiro();
+    var kikuchiyo:samuraiChar.Kikuchiyo = new samuraiChar.Kikuchiyo();
+    var kyuzo:samuraiChar.Kyuzo = new samuraiChar.Kyuzo();
     
-
     var rNum:Int;
     var x:Int = 200;
     var y:Int = 200;
@@ -48,8 +53,7 @@ class SamuraiSpirit extends hxd.App {
     var slot5:h2d.Text;
     var slot6:h2d.Text;
     var slot7:h2d.Text;
-    
-  
+     
     override function init(){
 
         hxd.Res.initEmbed(); //load resources
@@ -78,18 +82,20 @@ class SamuraiSpirit extends hxd.App {
         var cp5:Player = new Player("com5");
         var cp6:Player = new Player("com6");
         var cp7:Player = new Player("com7");
-
-        var daisuke:Samurai = new Samurai();
-        var gorobei:Samurai = new Samurai();
-        var heihachi:Samurai = new Samurai();
-        var kanbei:Samurai = new Samurai();
-        var katsushiro:Samurai = new Samurai();
-        var kikuchiyo:Samurai = new Samurai();
-        var kyuzo:Samurai = new Samurai();
-
-        //var daiInteract = new h2d.Interactive();
-
+    
+        // load all samurai characters, their images, and make selectable.
+      
+        daisuke.load(s2d);
+        gorobei.load(s2d);
+        heihachi.load(s2d);
+        kanbei.load(s2d);
+        katsushiro.load(s2d);
+        kikuchiyo.load(s2d);
+        kyuzo.load(s2d);
         
+        //TODO: assign samurai to player
+        //TODO: Create and assign Player roster array.
+    
         // There needs to be an eaiser way to assign samurai to the same player
         // Create function for each player that accepts a samurai as a parameter.
         //p1.set(daisuke.getBattleTrack());
@@ -153,80 +159,7 @@ class SamuraiSpirit extends hxd.App {
         // selectChar.text = "Select Your Samurai";
         // selectChar.setPosition(x,y);
         // selectChar.scale(4);
-        //var samImg = hxd.Res.art.samurai1SM.toTile();
-    
-       //var sam1Image = hxd.Res.hxlogo.toTexture();
-        //var img = sam1Image.toTile();
-        // var sam2Image = hxd.Res.art.samurai-2-sm.toTile();
-        // var sam3Image = hxd.Res.art.samurai-3-sm.toTile();
-        // var sam4Image = hxd.Res.art.samurai-5-sm.toTile();
-        // var sam5Image = hxd.Res.art.samurai-6-sm.toTile();
-        // var sam6Image = hxd.Res.art.samurai-7-sm.toTile();
-        // var sam7Image = hxd.Res.art.samurai-8-sm.toTile();
-       
-        sam1 = new h2d.Graphics(s2d);
-        var samImg = hxd.Res.art.samurai2SM.toTile();
-        sam2 = new h2d.Graphics(s2d);
-        var sam3 = new h2d.Graphics(s2d);
-        var sam4 = new h2d.Graphics(s2d);
-        var sam5 = new h2d.Graphics(s2d);
-        var sam6 = new h2d.Graphics(s2d);
-        var sam7 = new h2d.Graphics(s2d);
-        var samImg1 = hxd.Res.art.samurai1SM.toTile();
-        var samImg2 = hxd.Res.art.samurai2SM.toTile();
-        var samImg3 = hxd.Res.art.samurai3SM.toTile();
-        var samImg4 = hxd.Res.art.samurai4SM.toTile();
-        var samImg5 = hxd.Res.art.samurai5SM.toTile();
-        var samImg6 = hxd.Res.art.samurai6SM.toTile();
-        var samImg7 = hxd.Res.art.samurai7SM.toTile();
-
         
-
-    
-
-
-
-        sam1.drawTile(s2d.width/2, s2d.height/2 - 192, samImg1);
-        //sam1.lineStyle(6, 0xFFFFFF , 1);
-        //sam1.beginFill(0xEA8220);
-        //sam1.drawTile(s2d.width/2, s2d.height/2 - 192,samImg);
-        //sam1.drawRect(s2d.width/2, s2d.height/2 - 192, 136, 192);
-        
-        // sam1.drawRect(s2d.width/2, s2d.height/2 - 192, 136, 192);
-        trace("Height: " + s2d.height + "by Half: " + s2d.height/2, "Image: " + samImg2.height);
-        
-        trace("Width: " + s2d.width + "by Half: " + s2d.width/2, "Image: " + samImg2.width);
-        sam2.drawTile(s2d.width/2 - 136, s2d.height/2 - 192, samImg2);
-        // sam2.lineStyle(6, 0xFFFFFF);
-        // sam2.beginFill(0xEA8220);
-        //sam2.drawTile(s2d.width/2 - 136, s2d.height/2 - 192, samImg2);
-        // sam2.drawRect(s2d.width/2 - 136, s2d.height/2 - 192, 136, 192);
-        
-        // sam3.lineStyle(6, 0xFFFFFF);
-        // sam3.beginFill(0xEA8220);
-        sam3.drawTile(s2d.width/2 + 136, s2d.height/2 - 192, samImg3);
-        // sam3.drawRect(s2d.width/2 + 136, s2d.height/2 - 192, 136, 192);
-
-        // sam4.lineStyle(6, 0xFFFFFF);
-        // sam4.beginFill(0xEA8220);
-        sam4.drawTile(s2d.width/2 - 68, s2d.height/2, samImg4);
-        // sam4.drawRect(s2d.width/2 - 68, s2d.height/2, 136, 192);
-
-        // sam5.lineStyle(6, 0xFFFFFF);
-        // sam5.beginFill(0xEA8220);
-        sam5.drawTile(s2d.width/2 - (68 + 136), s2d.height/2, samImg5);
-        // sam5.drawRect(s2d.width/2 - (68 + 136), s2d.height/2, 136, 192);
-       
-        // sam6.lineStyle(6, 0xFFFFFF);
-        // sam6.beginFill(0xEA8220);
-        sam6.drawTile(s2d.width/2 + 68, s2d.height/2, samImg6);
-        // sam6.drawRect(s2d.width/2 + (68), s2d.height/2, 136, 192);
-
-        // sam7.lineStyle(6, 0xFFFFFF);
-        // sam7.beginFill(0xEA8220);
-        sam7.drawTile(s2d.width/2 + (68 + 136), s2d.height/2, samImg7);
-        // sam7.drawRect(s2d.width/2 + (68 + 136), s2d.height/2, 136, 192);
-       
         t = new h2d.Text(hxd.res.DefaultFont.get(), s2d);
         t.setPosition(x,y);
         t.scale(4);
@@ -240,18 +173,16 @@ class SamuraiSpirit extends hxd.App {
         new SamuraiSpirit();
     }
 
-     override function update(dt:Float){
+    override function update(dt:Float){
 
         if(hxd.Key.isPressed(hxd.Key.ENTER)){
             trace(playerCount.text);
             distribute(getPlayerCount(playerCount.text), common, lieut, boss);
         }
-
         
-      
                 
         // if (hxd.Key.isReleased(hxd.Key.UP)){
-          
+            
         //     if(rNum <= 0){
         //         rNum = 0;
         //     }
@@ -262,7 +193,7 @@ class SamuraiSpirit extends hxd.App {
         // }
 
         // else if(hxd.Key.isReleased(hxd.Key.DOWN)){
-          
+            
         //     if(rNum >= master.length - 1){
         //         rNum = master.length - 1;
         //     }
@@ -291,45 +222,6 @@ class SamuraiSpirit extends hxd.App {
     function playerSelectSamurai(sam: Samurai, p: Player){
         p.setSamurai(sam);
     }
-
-    function playerSelect(select: hxd.Event){
-        
-        switch(select.kind){
-            
-            //case MOUSE_LEFT: trace("mouse is clicked");
-            case EPush: trace("mouse left has been pressed");
-                trace(
-                         "\nrelX: ", select.relX);
-
-                trace("Jack:", sam2.absX);
-                if (sam1.x == select.relX){
-                    trace("where are YOU");
-                }
-                // if (select.relY == sam1.x && mousePos.mouseY == sam1.y){
-                //     trace("hi Daisuke");
-
-                // }
-                
-            
-            case _:
-        }
-            //mouse on click
-            // get position of mouse
-            // if it matches one of seven player positions
-            // then the player is assigned to that position
-
-            // problem is simultaneous player input
-            // have to register multiple hardware inputs
-
-    }
-    // implement during polish phase
-    // function hoverOverSamurai(event : hxd.Event){
-    //     //ray trace the object to gain the information
-    //     // var imgAct = new h2d.Interactive(300, 100, img);
-    //     // var imgAct.onOver = fucntion(event : hxd.Event){
-
-    //     // }
-    // }
 
     function shuffleCards(numCards:Int, arr:Array<Raider>) : Array<Raider>{
         var card:Raider;
