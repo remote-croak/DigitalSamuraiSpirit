@@ -20,9 +20,7 @@ class Samurai{
     var portraitGraphics:h2d.Graphics;
     var portraitInteract:h2d.Interactive;
 
-    public function new(){
-        
-    }
+    public function new(){}
 
     public function load(scene:h2d.Scene){
 
