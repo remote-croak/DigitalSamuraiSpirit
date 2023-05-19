@@ -1,5 +1,3 @@
-import samuraiChar.Kyuzo;
-import samuraiChar.Heihachi;
 
 class SamuraiSpirit extends hxd.App {
 
@@ -7,8 +5,11 @@ class SamuraiSpirit extends hxd.App {
     var lieut:Array<Raider>;
     var boss:Array<Raider>;
     var master:Array<Raider>; // this is the deck that players will pull cards from each round
-    var roster:Array<Player> = []; // contains all player data. This means chosen Samurai
+    var roster:Array<Samurai> = []; // contains all player data. This means chosen Samurai
     var deck:BuildDeck = new BuildDeck();
+
+    var Game:h2d.scene;
+    var Select:h2d.scene;
 
     var t:h2d.Text;
     var playerCount:h2d.TextInput;
@@ -93,13 +94,18 @@ class SamuraiSpirit extends hxd.App {
         kikuchiyo.load(s2d);
         kyuzo.load(s2d);
         
+        
         //TODO: assign samurai to player
         //TODO: Create and assign Player roster array.
+
+        roster.push(daisuke);
+        roster.push(gorobei);
+        roster.
     
         // There needs to be an eaiser way to assign samurai to the same player
         // Create function for each player that accepts a samurai as a parameter.
         //p1.set(daisuke.getBattleTrack());
-        p1.setSamurai(daisuke);
+        //p1.setSamurai(daisuke);
         
         // player join slots at the correct postion. TODO: make it fit multiple screen sizes
         slot1 = new h2d.Text(hxd.res.DefaultFont.get(), s2d);
@@ -165,7 +171,7 @@ class SamuraiSpirit extends hxd.App {
         t.scale(4);
 
 
-        hxd.Window.getInstance().addEventTarget(playerSelect);
+        // hxd.Window.getInstance().addEventTarget(playerSelect);
 
     }
 
@@ -278,6 +284,10 @@ class SamuraiSpirit extends hxd.App {
         count = Std.parseInt(players);
         return count;
 
+    }
+
+    function getRoster(){
+        return roster;
     }
 
 }
